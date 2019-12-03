@@ -1,18 +1,20 @@
 // call the packages we need
 // #1 Add express package to the app
 
-// ===============================
 var express = require('express');
-var mongoose = require('mongoose');
-var app = express();   
-var cors = require('cors'); 
-mongoose.connect('mongodb://localhost:27017/coc');      
+
+// ===============================
+
+var app = express();
+var cors = require('cors');       
 
 // #2 Add body-parser package to the app
 
+var bodyParser = require('body-parser');
+
 // ===============================
 
-var bodyParser = require('body-parser');
+
 // configure app to use bodyParser()
 // this will let us get the data from a POST
 app.use(cors());
@@ -21,10 +23,12 @@ app.use(bodyParser.json());
 
 // #3 Serve static content in folder frontend
 
+app.use(express.static("frontend"));
+
 // ===============================
 
 
-var port = process.env.PORT || 8080; 
+var port = process.env.PORT || 3000; 
 
 // ROUTES FOR OUR API
 // =============================================================================
@@ -35,21 +39,22 @@ router.get('/products', products.getAllProducts);
 router.get('/products/:pid', products.getProductById);
 
 // #4 Complete the routing for POST, PUT, DELETE
-router.post('/products', products.addProduct);
-router.put('/products/:pid', products.updateProductById);
-router.delete('/products/:pid', products.deleteProductById);
+
+router.post('/api/products',products.addProduct);
+router.put('/api/products/:pid',products.updateProductById);
+router.delete('/api/products/:pid',products.deleteProductById);
 
 // ===============================
-
-
 
 // REGISTER OUR ROUTES -------------------------------
 // all of our routes will be prefixed with /api
 app.use('/api', cors(), router);
 
 // #10 Start the server
-var port = process.env.PORT || 8080;
+
 app.listen(port, function () {
+    console.log('Magic happens on http://localhost:' + port);
+});
+
 // ===============================
 console.log('Magic happens on http://localhost:' + port);
-});
