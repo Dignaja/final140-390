@@ -2,7 +2,8 @@
 // #1 Add express package to the app
 
 // ===============================
-
+var express = require('express');
+var mongoose = require('mongoose');
 var app = express();   
 var cors = require('cors');       
 
