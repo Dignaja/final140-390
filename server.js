@@ -5,13 +5,14 @@
 var express = require('express');
 var mongoose = require('mongoose');
 var app = express();   
-var cors = require('cors');       
+var cors = require('cors'); 
+mongoose.connect('mongodb://localhost:27017/coc');      
 
 // #2 Add body-parser package to the app
 
 // ===============================
 
-
+var bodyParser = require('body-parser');
 // configure app to use bodyParser()
 // this will let us get the data from a POST
 app.use(cors());
@@ -43,6 +44,8 @@ router.get('/products/:pid', products.getProductById);
 app.use('/api', cors(), router);
 
 // #10 Start the server
-
+var port = process.env.PORT || 8080;
+app.listen(port, function () {
 // ===============================
 console.log('Magic happens on http://localhost:' + port);
+});
